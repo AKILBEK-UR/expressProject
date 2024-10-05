@@ -1,10 +1,14 @@
 import { Router, Request, Response } from "express";
 import { UserService } from "./user.service";
 import { generateToken } from "../../shared/generator.helper";
+import { userSignUpDtoSchema } from "./dto/user-signup.dto"
+import { userLoginDtoSchema } from "./dto/user-signin.dto";
+import { validateReqBody } from "../../shared/request-body.validator";
+
 export const userRouter = Router();
 const userService = new UserService();
 
-userRouter.post("/signup", async (req: Request, res: Response) => {
+userRouter.post("/signup",validateReqBody(userSignUpDtoSchema), async (req: Request, res: Response) => {
     const { username, email, password } = req.body;
 
     try {
@@ -19,7 +23,7 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
 });
 
 
-userRouter.post('/login', async (req: Request, res: Response) => {
+userRouter.post('/login',validateReqBody(userLoginDtoSchema), async (req: Request, res: Response) => {
 
     try {
       const { email, password } = req.body;

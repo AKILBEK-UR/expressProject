@@ -10,6 +10,6 @@ export const userLoginDtoSchema = z.object({
     .min(8, { message: "Password must be at least 8 characters" })
 });
 
-export type userLoginDto = z.infer<
+export type UserLoginDto = z.infer<
     typeof userLoginDtoSchema
 >;

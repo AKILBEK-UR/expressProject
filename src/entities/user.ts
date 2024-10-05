@@ -15,7 +15,7 @@ export class User {
     password!: string;
 
   async hashPassword(password: string):Promise<string> {
-    const hashed = await bcrypt.hash(this.password, 10);
-    return hashed;
+    const saltRounds = 10; 
+    return bcrypt.hash(password, saltRounds);
   }
 }

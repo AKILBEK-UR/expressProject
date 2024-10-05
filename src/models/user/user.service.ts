@@ -1,6 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { UserSignUpDto } from "./dto/user-signup.dto";
-import { userLoginDto } from "./dto/user-signin.dto";
+import { UserLoginDto } from "./dto/user-signin.dto";
 import { User } from "../../entities/user";
 import bcrypt from "bcrypt"
 export class UserService {
@@ -17,7 +17,7 @@ export class UserService {
         return await this.userRepository.save(user); 
     }
 
-    async signin(newUser: userLoginDto):Promise<User | null>{
+    async signin(newUser: UserLoginDto):Promise<User | null>{
         const email = newUser.email
         
         const user = await this.userRepository.findOneBy({email})
