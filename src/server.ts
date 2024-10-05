@@ -1,14 +1,19 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import { AppDataSource } from './data-source';
+import { userRouter } from './models/user/user.controller';
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 3000;
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+app.use('/auth', userRouter);
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+AppDataSource.initialize()
+  .then(() => {
+    console.log('Database connected successfully');
+    app.listen(process.env.PORT || 3000, () => {
+      console.log(`Server running on port ${process.env.PORT || 3000}`);
+    });
+  })
+  .catch((error) => console.log('Database connection error: ', error));
